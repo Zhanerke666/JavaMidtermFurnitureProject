@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html ng-app="aitu-project">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta charset="viewport" content="width=devise-width, initial-scale=1">
+        <title>Product List</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.8/angular.js"></script>
+
+        <script src="app.js"></script>
+    </head>
+
+    <body ng-controller="ProductCtrl" >
+    	<!----------->
+    	
+    	<header>
+    		
+    	</header>
+
+	
+
+	<section class="banner-area">
+		<div class="img-area">
+			<div class="banner-text">
+				<h1>Furniture Store</h1>
+
+			</div>
+		</div>
+	</section>
+
+
+	<br><br>
+<!----------->
+
+
+
+        <div class="container" >
+            <h1 >Hello {{customer.name}}</h1>
+            <br><br>
+            <h3>Product List</h3>
+            <div class="row">
+                <div class="col-log-12">
+                    <div id="options" class="m-b-10">
+                <span class="gallery-option-set" id="filter" data-option-key="filter">
+                    <a class="btn btn-default btn-xs active" ng-repeat="category in categoryList" ng-click="getProductsByCategory(category.id)">{{category.name}}</a>
+                </span>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="row">
+                <table class="table table-bordered table-striped table-condensed">
+                    <thead>
+                    <th>ID</th>
+                    <th>name</th>
+                    <th>slug</th>
+                    <th>description</th>
+                    <th>price</th>
+                    <th>categoryID</th>
+                    </thead>
+                    <tr ng-repeat="product in productList | orderBy: 'id'">
+                        <td ng-bind="product.id"></td>
+                        <td ng-bind="product.name"></td>
+                        <td ng-bind="product.slug"></td>
+                        <td ng-bind="product.description"></td>
+                        <td ng-bind="product.price"></td>
+                        <td ng-bind="product.categoryId"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <br><br>
+
+<!-------->
+
+
+        <div class="container" >
+            <form action="/action_page.php" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label for="uname">Username:</label>
+                    <input ng-model="auth.login" type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <input ng-model="auth.password" type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+
+                <button ng-click="login(auth)" type="button" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+        <script>
+            // Disable form submissions if there are invalid fields
+            (function() {
+                'use strict';
+                window.addEventListener('load', function() {
+                    // Get the forms we want to add validation styles to
+                    var forms = document.getElementsByClassName('needs-validation');
+                    // Loop over them and prevent submission
+                    var validation = Array.prototype.filter.call(forms, function(form) {
+                        form.addEventListener('submit', function(event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+            })();
+        </script>
+
+<!------->
+
+<br><br>
+
+        <section class="contact" id="contact">
+		<h3 class="header-text">Contact Us</h3>
+		<div class="content-area">
+			<div class="single-contact">
+				<i class="fa fa-envelope"></i>
+				<p>cs1901group@gmail.com</p>
+			</div>
+		</div>
+		
+	</section>
+
+
+	<!----------->
+
+
+
+
+<footer>
+	
+</footer>
+    </body>
+
+</html>
