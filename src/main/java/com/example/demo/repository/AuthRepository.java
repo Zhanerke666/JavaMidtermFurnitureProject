@@ -6,8 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuthRepository extends CrudRepository<Auth, Long> {
-
     Auth findByLoginAndPassword(String login, String password);
-
-     Auth findByToken(String token);
+    Auth findByToken(String token);
 }

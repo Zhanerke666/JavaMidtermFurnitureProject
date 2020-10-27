@@ -14,34 +14,20 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class AuthService {
-
     private final AuthRepository authRepository;
     private final CustomerRepository customerRepository;
-
     @Transactional
     public Auth login(Auth auth) throws Exception {
-
-        Auth authDB = authRepository.findByLoginAndPassword (auth.getLogin (), auth.getPassword () );
-
+        Auth authDB = authRepository.findByLoginAndPassword(auth.getLogin(),auth.getPassword());
         if(authDB == null){
-
-            throw new Exception (  );
+            throw new Exception();
         }
-
         String token = UUID.randomUUID ().toString ();
-
-        authDB.setToken ( token );
-        return authRepository.save ( authDB );
-
-
-
+        authDB.setToken(token);
+        return authRepository.save(authDB);
     }
-
     public Customer getCustomerByToken(String token) throws Exception {
-
-        Auth authDB = authRepository.findByToken (token);
-
-
-        return customerRepository.findById ( authDB.getCustomerId () ).orElseThrow ( ChangeSetPersister.NotFoundException::new );
+        Auth authDB = authRepository.findByToken(token);
+        return customerRepository.findById(authDB.getCustomerId()).orElseThrow(ChangeSetPersister.NotFoundException::new);
     }
 }

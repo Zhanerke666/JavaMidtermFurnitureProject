@@ -19,8 +19,6 @@ public class Auth {
     private long id;
     private Long customerId;
     private String login;
-
     private String password;
     private String token;
-
 }

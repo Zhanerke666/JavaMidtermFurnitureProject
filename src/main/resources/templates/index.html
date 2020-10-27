@@ -16,29 +16,16 @@
     </head>
 
     <body ng-controller="ProductCtrl" >
-    	<!----------->
-    	
-    	<header>
-    		
-    	</header>
-
-	
-
+    <header></header>
 	<section class="banner-area">
 		<div class="img-area">
 			<div class="banner-text">
 				<h1>Furniture Store</h1>
-
 			</div>
 		</div>
 	</section>
-
-
 	<br><br>
 <!----------->
-
-
-
         <div class="container" >
             <h1 >Hello {{customer.name}}</h1>
             <br><br>
@@ -52,10 +39,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
             <div class="row">
                 <table class="table table-bordered table-striped table-condensed">
                     <thead>
@@ -65,6 +48,7 @@
                     <th>description</th>
                     <th>price</th>
                     <th>categoryID</th>
+                    <th>action</th>
                     </thead>
                     <tr ng-repeat="product in productList | orderBy: 'id'">
                         <td ng-bind="product.id"></td>
@@ -73,18 +57,14 @@
                         <td ng-bind="product.description"></td>
                         <td ng-bind="product.price"></td>
                         <td ng-bind="product.categoryId"></td>
+                        <td ng-show="isAuthorized"><div ng-click="addToCart(product)" class="btn btn-primary">add to cart</div></td>
                     </tr>
                 </table>
             </div>
         </div>
-
         <br><br>
-
-<!-------->
-
-
         <div class="container" >
-            <form action="/action_page.php" class="needs-validation" novalidate>
+            <form  action="/action_page.php" class="needs-validation" novalidate>
                 <div class="form-group">
                     <label for="uname">Username:</label>
                     <input ng-model="auth.login" type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
@@ -100,6 +80,7 @@
 
                 <button ng-click="login(auth)" type="button" class="btn btn-primary">Submit</button>
             </form>
+            <div class="btn btn-danger" ng-click="logOut()" ng-show="isAuthorized">Log out</div>
         </div>
 
         <script>
@@ -122,11 +103,8 @@
                 }, false);
             })();
         </script>
-
 <!------->
-
 <br><br>
-
         <section class="contact" id="contact">
 		<h3 class="header-text">Contact Us</h3>
 		<div class="content-area">
@@ -135,18 +113,55 @@
 				<p>cs1901group@gmail.com</p>
 			</div>
 		</div>
-		
 	</section>
 
 
+
+
+    <section class="">
+        <h3 class="header-text">Orders</h3>
+        <div class="container" ng-repeat="order in orderList  track by $index">
+            <div class="container__header">
+                <span ng-bind="order.totalSum"></span>
+                <span ng-bind="order.orderDate"></span>
+            </div>
+            <div class="container__row" ng-repeat="item in order.orderDetailsInfo track by $index">
+                <span ng-bind="item.productId"></span>
+                <span ng-bind="item.quantity"></span>
+                <span ng-bind="item.price"></span>
+                <span ng-bind="item.totalSum"></span>
+            </div>
+        </div>
+    </section>
+
+
 	<!----------->
+    <footer>
+        <table ng-show="isAuthorized" class="table table-bordered  " style="width:100%;">
+            <thead style="color:white;">
+            <th>ID</th>
+            <th>name</th>
+            <th>quantity</th>
+            <th>total sum</th>
+            <th>price</th>
+            <th>categoryID</th>
+            </thead>
+            <tr ng-repeat="product in cart track by $index" style="color:white">
+                <td ng-bind="product.id"></td>
+                <td ng-bind="product.name"></td>
+                <td ng-bind="product.quantity"></td>
+                <td ng-bind="product.totalSum"></td>
+                <td ng-bind="product.price"></td>
+                <td ng-bind="product.categoryId"></td>
+            </tr>
+            <tfoot style="color:white">
+            <td>TotalSum</td>
+            <td>{{totalSum()}}</td>
+            </tfoot>
+        </table>
 
-
-
-
-<footer>
-	
-</footer>
+        <div ng-click="makeOrder()" class="btn btn-success">Make Order</div>
+    </footer>
     </body>
 
 </html>

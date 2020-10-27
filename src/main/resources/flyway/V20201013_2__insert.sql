@@ -18,5 +18,13 @@ insert into product (id, name, slug, description, price, category_id) values
 
 insert into category(id, category_name, slug )
 values (1, 'Beds', 'qwerDF'),
-(2, 'Chairs', 'UIbnm');
+(2, 'Chairs', 'UIbnm'),
+(3,'Tables','tables');
+
+insert into customer values
+(1,'zhandos','87075893900','Abai 121'),
+(2,'alim','86969696969','Panfilova 15');
+insert into auth values
+(1,1,'zhandos','789z789z','zhandos789z789z'),
+(2,2,'alim','Lima','alimLima');
 

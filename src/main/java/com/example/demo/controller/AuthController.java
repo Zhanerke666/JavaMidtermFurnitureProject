@@ -8,18 +8,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-@Service
+//@Service
 @AllArgsConstructor
 @RestController
 public class AuthController {
-
     private final AuthService authService;
-
     @PostMapping(path = "/login")
     public ResponseEntity<?> login(@RequestBody Auth auth){
-
         try {
-            return ResponseEntity.ok ( authService.login(auth) );
+            return ResponseEntity.ok(authService.login(auth));
         } catch (Exception e) {
             return ResponseEntity.status ( HttpStatus.UNAUTHORIZED ).build ();
         }

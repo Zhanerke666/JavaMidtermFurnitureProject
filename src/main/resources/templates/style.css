@@ -286,3 +286,19 @@ footer p{
 	align-self: center;
 }
 
+.container__header{
+    width:100%;
+    height:50px;
+    display:flex;
+    flex-direction:row;
+    justify-contact:space-between;
+}
+.container__row{
+    width:100%;
+       height:50px;
+       display:flex;
+       flex-direction:row;
+       justify-contact:space-between;
+       background-color:#fefefe;
+}
+
