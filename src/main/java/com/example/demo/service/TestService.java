@@ -19,6 +19,10 @@ public class TestService {
     @Transactional
     public Auth login(Auth auth) throws Exception {
         Auth authDB = authRepository.findByLoginAndPassword(auth.getLogin(),auth.getPassword());
+        if(authDB != null){
+            throw new Exception();
+        }
+        //aksjdajhsgdjhasdgjhasdj
         String token = UUID.randomUUID ().toString ();
         authDB.setToken(token);
         return authRepository.save(authDB);
