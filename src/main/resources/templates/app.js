@@ -140,6 +140,23 @@ app.controller('ProductCtrl', function($scope, $http) {
                     console.log(response);
                 });
     };
+    $scope.getProductsByCategory = function(categoryID) {
+        $http({
+            url: 'http://127.0.0.1:8080/api/product/category/' + categoryID,
+            method: "GET",
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json"
+            }
+        })
+            .then(function (response) {
+                    console.log(response);
+                    $scope.productList = response.data;
+                },
+                function (response) { // optional
+                    console.log(response);
+                });
+    };
     $scope.getProducts();
     $scope.getCategories();
     $scope.getOrders();
