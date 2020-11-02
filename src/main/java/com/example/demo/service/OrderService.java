@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entity.*;
 import com.example.demo.repository.OrderListRepository;
 import com.example.demo.repository.OrderRepository;
+import com.example.demo.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -22,6 +24,7 @@ public class OrderService {
     protected OrderRepository orderRepository;
     protected OrderListRepository orderListRepository;
     protected AuthService authService;
+    protected ProductRepository productRepository;
 
     public ResponseEntity<?> createOrder(String token, OrderInfo order){
         Customer me;
@@ -83,7 +86,9 @@ public class OrderService {
             System.out.println(orderLists);
             for (OrderList orderList: orderLists){
                 OrderDetailInfo orderDetailInfo = new OrderDetailInfo();
+                Product product = productRepository.findById ( orderList.getProductId ()).orElse ( new Product ());
                 orderDetailInfo.setPrice(orderList.getPrice());
+                orderDetailInfo.setName ( product.getName () );
                 orderDetailInfo.setProductId(orderList.getProductId());
                 orderDetailInfo.setQuantity(orderList.getQuantity());
                 orderDetailInfo.setTotalSum(orderList.getTotalSum());

@@ -6,24 +6,27 @@ app.controller('ProductCtrl', function($scope, $http) {
     $scope.categoryList = [];
     $scope.cart = [];
     $scope.order = {};
-    $scope.isAuthorized = auth_state;
+    $scope.isAuthorized = auth_state === "true";
     $scope.token = auth_token ? auth_token : "";
     $scope.orderList = [];
     $scope.addToCart = function(product){
-        console.log(product);
-        if($scope.cart.length){
+        console.log($scope.cart.length);
+        if($scope.cart.length > 0){
             console.log("length true");
+            let isExists = false;
            $scope.cart.map((item)=>{
                        if(item.id === product.id){
-                            console.log("prod_id")
-                           item.quantity+=1;
+                            isExists = true;
+                           item.quantity += 1;
                            item.totalSum = item.quantity * item.price;
-                       }else{
-                           product.quantity=1;
-                           product.totalSum = product.price;
-                           $scope.cart.push(product);
                        }
-                   })
+
+                   });
+            if(!isExists){
+                product.quantity=1;
+                product.totalSum = product.price;
+                $scope.cart.push(product);
+            }
         } else{
             product.quantity=1;
             product.totalSum = product.price;
@@ -199,8 +202,8 @@ app.controller('ProductCtrl', function($scope, $http) {
                     $scope.auth = response.data;
                     console.log(response.data);
                     $scope.isAuthorized = true;
-                    let auth_state = window.localStorage.setItem("auth_state",true);
-                    let auth_token = window.localStorage.setItem("auth_token",response.data.token);
+                    window.localStorage.setItem("auth_state","true");
+                    window.localStorage.setItem("auth_token",response.data.token);
                     $scope.token = response.data.token;
                 }).then(function(){
                     $scope.getMe();
@@ -208,14 +211,14 @@ app.controller('ProductCtrl', function($scope, $http) {
                 .catch((error)=>{
                    alert(error);
                    $scope.isAuthorized = false;
-                   let auth_state = window.localStorage.setItem("auth_state",false);
-                   let auth_token = window.localStorage.setItem("auth_token",'');
+                   window.localStorage.setItem("auth_state","false");
+                   window.localStorage.removeItem("auth_token");
                 });
                 }
     $scope.logOut = function(){
-            let auth_state = window.localStorage.setItem("auth_state",false);
+            window.localStorage.setItem("auth_state","false");
             $scope.isAuthorized = false;
-            let auth_token = window.localStorage.setItem("auth_token",'');
+            window.localStorage.removeItem("auth_token");
         }
 
     });

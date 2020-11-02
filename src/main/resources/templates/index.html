@@ -44,7 +44,6 @@
                     <thead>
                     <th>ID</th>
                     <th>name</th>
-                    <th>slug</th>
                     <th>description</th>
                     <th>price</th>
                     <th>categoryID</th>
@@ -53,7 +52,6 @@
                     <tr ng-repeat="product in productList | orderBy: 'id'">
                         <td ng-bind="product.id"></td>
                         <td ng-bind="product.name"></td>
-                        <td ng-bind="product.slug"></td>
                         <td ng-bind="product.description"></td>
                         <td ng-bind="product.price"></td>
                         <td ng-bind="product.categoryId"></td>
@@ -105,40 +103,37 @@
         </script>
 <!------->
 <br><br>
-        <section class="contact" id="contact">
-		<h3 class="header-text">Contact Us</h3>
-		<div class="content-area">
-			<div class="single-contact">
-				<i class="fa fa-envelope"></i>
-				<p>cs1901group@gmail.com</p>
-			</div>
-		</div>
-	</section>
-
-
 
 
     <section class="">
         <h3 class="header-text">Orders</h3>
         <div class="container" ng-repeat="order in orderList  track by $index">
             <div class="container__header">
-                <span ng-bind="order.totalSum"></span>
-                <span ng-bind="order.orderDate"></span>
+                <span>Order total price: </span>
+                <span ng-bind="order.totalPrice"></span>
+                <span>Order date: </span>
+                <span ng-bind="order.date"></span>
             </div>
-            <div class="container__row" ng-repeat="item in order.orderDetailsInfo track by $index">
+            <div class="container__row" ng-repeat="item in order.orderDetailInfo track by $index">
+                <span> Product id: </span>
                 <span ng-bind="item.productId"></span>
+                <span> Product name: </span>
+                <span ng-bind="item.name"></span>
+                <span> Quantity: </span>
                 <span ng-bind="item.quantity"></span>
+                <span> Price: </span>
                 <span ng-bind="item.price"></span>
+                <span> Total sum: </span>
                 <span ng-bind="item.totalSum"></span>
             </div>
+            <hr>
         </div>
     </section>
+    <!----------->
 
-
-	<!----------->
-    <footer>
-        <table ng-show="isAuthorized" class="table table-bordered  " style="width:100%;">
-            <thead style="color:white;">
+    <div ng-show="isAuthorized"  class="orderA" id="orderA">
+        <table  class="table table-bordered  " style="width:100%;">
+            <thead style="">
             <th>ID</th>
             <th>name</th>
             <th>quantity</th>
@@ -146,7 +141,7 @@
             <th>price</th>
             <th>categoryID</th>
             </thead>
-            <tr ng-repeat="product in cart track by $index" style="color:white">
+            <tr ng-repeat="product in cart track by product.id" style="">
                 <td ng-bind="product.id"></td>
                 <td ng-bind="product.name"></td>
                 <td ng-bind="product.quantity"></td>
@@ -154,14 +149,40 @@
                 <td ng-bind="product.price"></td>
                 <td ng-bind="product.categoryId"></td>
             </tr>
-            <tfoot style="color:white">
+            <tfoot style="">
             <td>TotalSum</td>
             <td>{{totalSum()}}</td>
             </tfoot>
         </table>
 
         <div ng-click="makeOrder()" class="btn btn-success">Make Order</div>
+    </div>
+
+
+
+	<!----------->
+    <footer>
+
+
     </footer>
+
+
+
+    <section class="contact" id="contact">
+        <h3 class="header-text">Contact Us</h3>
+        <div class="content-area">
+            <div class="single-contact">
+                <i class="fa fa-envelope"></i>
+                <p>cs1901group@gmail.com</p>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
     </body>
 
 </html>
