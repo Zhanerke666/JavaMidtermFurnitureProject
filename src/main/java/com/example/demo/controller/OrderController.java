@@ -38,4 +38,35 @@ public class OrderController {
             throw e;
         }
     }
+
+    @GetMapping("/api/orders/status/{status}")
+    public ResponseEntity<?> getOrdersByStatus(@RequestHeader("Auth") String token,@PathVariable String status) throws Exception{
+        try{
+            return ResponseEntity.ok(orderService.getAllOrdersByStatus(token,status));
+        }catch (Exception e){
+//            return ResponseEntity.status ( HttpStatus.UNAUTHORIZED ).build ();
+            throw e;
+        }
+    }
+
+    @GetMapping("/api/orders/{id}")
+    public ResponseEntity<?> getOrderById(@RequestHeader("Auth") String token,@PathVariable Long id) throws Exception{
+        try{
+            return ResponseEntity.ok(orderService.getOrderWithItemsById(token,id));
+        }catch (Exception e){
+//            return ResponseEntity.status ( HttpStatus.UNAUTHORIZED ).build ();
+            throw e;
+        }
+    }
+
+    @PutMapping("/api/orders/{id}/status/{status}")
+    public ResponseEntity<?> setNewOrderStatus(@RequestHeader("Auth") String token,@PathVariable(name = "id") Long id,@PathVariable(name = "status") String status) throws Exception{
+        try{
+            return ResponseEntity.ok(orderService.setNewStatus(token,id,status));
+        }catch (Exception e){
+//            return ResponseEntity.status ( HttpStatus.UNAUTHORIZED ).build ();
+            throw e;
+        }
+    }
+
 }

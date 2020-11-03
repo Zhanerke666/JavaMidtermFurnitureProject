@@ -21,4 +21,5 @@ public class Order {
     private Long customerId;
     private float totalPrice;
     private String orderDate;
+    private String status;
 }

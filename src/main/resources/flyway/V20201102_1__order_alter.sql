@@ -1,0 +1,1 @@
+alter table orderr add column status varchar default('new')

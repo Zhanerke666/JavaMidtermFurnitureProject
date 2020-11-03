@@ -82,6 +82,11 @@ app.controller('ProductCtrl', function($scope, $http) {
         })
             .then(function (response) {
                     console.log(response);
+                    if(response.status === 200){
+                        $scope.cart = [];
+                        $scope.order = {};
+                        alert('Спасибо за заказ!!!')
+                    }
                 }).catch((response)=>{
                     alert(response);
                 });

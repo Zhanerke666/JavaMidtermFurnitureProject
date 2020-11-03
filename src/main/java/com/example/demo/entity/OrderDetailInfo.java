@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Data
 public class OrderDetailInfo {
+    private Long id;
     private String name;
     private Long productId;
     private float price;

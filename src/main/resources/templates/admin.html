@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html ng-app="aitu-project">
+<head>
+    <meta charset="UTF-8">
+    <title>Furniture factory admin panel</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.angularjs.org/1.5.8/angular.js"></script>
+    <style>
+        .main-container{
+            color:#fff;
+        }
+    </style>
+    <script src="main.js"></script>
+</head>
+<body>
+<div class="container" ng-controller="adminController">
+    <h3>Factory admin</h3>
+    <form ng-show="!isAuthorized"  class="needs-validation" novalidate>
+        <div class="form-group">
+            <label for="uname">Username:</label>
+            <input ng-model="auth.login" type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+        </div>
+        <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input ng-model="auth.password" type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+        </div>
+
+        <button ng-click="login(auth)" type="button" class="btn btn-primary">Submit</button>
+    </form>
+    <div class="btn btn-danger" ng-click="logOut()" ng-show="isAuthorized">Log out</div>
+
+    <div ng-show="isAuthorized" class="container bg-dark main-container">
+        <div class="container">
+            <h4>Status filter</h4>
+            <select name="status" id="status" ng-model="order_status" ng-change="onInput(this.value)">
+                <option value="all" selected>All</option>
+                <option value="new">new</option>
+                <option value="inprogress">inprogress</option>
+                <option value="done">done</option>
+            </select>
+            <table class="table table-bordered table-striped table-condensed" style="color:white">
+                <tr>
+                    <th>id</th>
+                    <th>date</th>
+                    <th>total sum</th>
+                    <th>customer name</th>
+                    <th>customer phone</th>
+                    <th>customer address</th>
+                    <th>status</th>
+                    <th>action</th>
+                </tr>
+                <tr ng-repeat="order in orders track by $index">
+                    <td ng-bind="order.id"></td>
+                    <td ng-bind="order.date">date</td>
+                    <td ng-bind="order.totalPrice">total sum</td>
+                    <td ng-bind="order.customerName">customer name</td>
+                    <td ng-bind="order.customerPhone">customer phone</td>
+                    <td ng-bind="order.customerAddress">customer address</td>
+                    <td ng-bind="order.status"></td>
+                    <td><div class="btn btn-primary" ng-click="showMore($index)">Show more...</div></td>
+                </tr>
+            </table>
+        </div>
+        <div class="container">
+            <h4>Current order</h4>
+            <table class="table table-bordered table-striped table-condensed" style="color:white">
+                <tr>
+                    <th>id</th>
+                    <th>date</th>
+                    <th>total sum</th>
+                    <th>customer name</th>
+                    <th>customer phone</th>
+                    <th>customer address</th>
+                    <th>Change status</th>
+                </tr>
+                <tr>
+                    <td ng-bind="current_order.id"></td>
+                    <td ng-bind="current_order.date"></td>
+                    <td ng-bind="current_order.totalPrice"></td>
+                    <td ng-bind="current_order.customerName"></td>
+                    <td ng-bind="current_order.customerPhone"></td>
+                    <td ng-bind="current_order.customerAddress"></td>
+                    <td>
+                        <select ng-change="onChangeStatus(current_order.id)" name="change_status" id="change_status" ng-model="changed_status">
+                            <option value="new">new</option>
+                            <option value="inprogress">inprogress</option>
+                            <option value="done">done</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <table class="table table-bordered table-striped table-condensed" style="color:white">
+                <tr>
+                    <th>id</th>
+                    <th>product name</th>
+                    <th>quantity</th>
+                    <th>price per 1</th>
+                    <th>total sum</th>
+                </tr>
+                <tr ng-repeat="item in current_order.orderDetailInfo track by $index">
+                    <td ng-bind="item.id"></td>
+                    <td ng-bind="item.name"></td>
+                    <td ng-bind="item.quantity"></td>
+                    <td ng-bind="item.price"></td>
+                    <td ng-bind="item.totalSum"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+</body>
+
+</html>

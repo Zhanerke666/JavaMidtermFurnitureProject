@@ -1,9 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.*;
-import com.example.demo.repository.OrderListRepository;
-import com.example.demo.repository.OrderRepository;
-import com.example.demo.repository.ProductRepository;
+import com.example.demo.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.HttpStatus;
@@ -25,6 +23,8 @@ public class OrderService {
     protected OrderListRepository orderListRepository;
     protected AuthService authService;
     protected ProductRepository productRepository;
+    protected RoleRepository roleRepository;
+    protected CustomerRepository customerRepository;
 
     public ResponseEntity<?> createOrder(String token, OrderInfo order){
         Customer me;
@@ -40,6 +40,7 @@ public class OrderService {
         newOrder.setCustomerId(me.getId());
         newOrder.setOrderDate(dtf.format(localDate));
         newOrder.setTotalPrice(order.getTotalPrice());
+        newOrder.setStatus("new");
         System.out.println(newOrder);
         try{
             newOrder = orderRepository.save(newOrder);
@@ -104,5 +105,109 @@ public class OrderService {
         }
         System.out.println(orderInfoList);
         return orderInfoList;
+    }
+
+    public Object getAllOrdersByStatus(String token, String status) throws Exception{
+        Customer me;
+        try {
+            me = authService.getCustomerByToken(token);
+            String role = roleRepository.findRoleByUserId(me.getId());
+            if(!role.equals("admin")) throw new Exception("Not admin");
+        } catch (Exception e) {
+            throw e;
+        }
+        List<Order> orders;
+        if(status.equals("all")){
+            orders = orderRepository.findAll();
+        } else {
+            orders = orderRepository.findAllByStatus(status);
+        }
+        if(orders.isEmpty()){
+            throw new Exception("No items");
+        }
+        System.out.println(orders);
+        List<OrderInfo> orderInfoList = new ArrayList<>();
+        for (Order order:
+                orders) {
+            OrderInfo orderInfo = new OrderInfo();
+            orderInfo.setId(order.getId());
+            orderInfo.setDate(order.getOrderDate());
+            orderInfo.setTotalPrice(order.getTotalPrice());
+            Customer customer = customerRepository.findById(order.getCustomerId()).orElseThrow();
+            orderInfo.setCustomerAddress(customer.getAddress());
+            orderInfo.setCustomerName(customer.getName());
+            orderInfo.setCustomerPhone(customer.getPhone());
+            orderInfo.setStatus(order.getStatus());
+            System.out.println(orderInfo);
+            assert false;
+            orderInfoList.add(orderInfo);
+        }
+        System.out.println(orderInfoList);
+        return orderInfoList;
+    }
+
+    public Object getOrderWithItemsById(String token, Long id) throws Exception {
+        Customer me;
+        try {
+            me = authService.getCustomerByToken(token);
+        } catch (Exception e) {
+            throw e;
+        }
+        Long myId = me.getId();
+        System.out.println(myId);
+        Order order = orderRepository.findById(id).orElseThrow();
+        String role = roleRepository.findRoleByUserId(me.getId());
+        System.out.println(role);
+        if(!myId.equals(order.getCustomerId()) && !role.equals("admin")) throw new Exception("NO access");
+        System.out.println(order);
+        OrderInfo orderInfo = new OrderInfo();
+        Long orderId = order.getId();
+        List<OrderDetailInfo> orderDetailInfos = new ArrayList<>();
+        List<OrderList> orderLists = orderListRepository.findAllByOrderId(orderId);
+        System.out.println(orderLists);
+        for (OrderList orderList: orderLists){
+            OrderDetailInfo orderDetailInfo = new OrderDetailInfo();
+            Product product = productRepository.findById ( orderList.getProductId ()).orElse ( new Product ());
+            orderDetailInfo.setPrice(orderList.getPrice());
+            orderDetailInfo.setId(orderList.getId());
+            orderDetailInfo.setName ( product.getName () );
+            orderDetailInfo.setProductId(orderList.getProductId());
+            orderDetailInfo.setQuantity(orderList.getQuantity());
+            orderDetailInfo.setTotalSum(orderList.getTotalSum());
+            orderDetailInfos.add(orderDetailInfo);
+            System.out.println(orderDetailInfos);
+        }
+            orderInfo.setDate(order.getOrderDate());
+            orderInfo.setTotalPrice(order.getTotalPrice());
+            orderInfo.setOrderDetailInfo(orderDetailInfos);
+            orderInfo.setCustomerId(order.getCustomerId());
+            Customer customer = customerRepository.findById(order.getCustomerId()).orElseThrow();
+            orderInfo.setCustomerAddress(customer.getAddress());
+            orderInfo.setCustomerName(customer.getName());
+            orderInfo.setCustomerPhone(customer.getPhone());
+            orderInfo.setId(order.getId());
+            System.out.println(orderInfo);
+        return orderInfo;
+    }
+
+    public ResponseEntity<?> setNewStatus(String token, Long id, String status) throws  Exception{
+        Customer me;
+        try {
+            me = authService.getCustomerByToken(token);
+        } catch (Exception e) {
+            throw e;
+        }
+        Long myId = me.getId();
+        System.out.println(myId);
+        Order order = orderRepository.findById(id).orElseThrow();
+        String role = roleRepository.findRoleByUserId(me.getId());
+        System.out.println(role);
+        if(!myId.equals(order.getCustomerId()) && !role.equals("admin")) throw new Exception("NO access");
+        try{
+            order.setStatus(status);
+            return ResponseEntity.ok(orderRepository.save(order));
+        }catch (Exception e){
+            throw e;
+        }
     }
 }

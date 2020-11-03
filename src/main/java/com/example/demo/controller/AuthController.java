@@ -22,5 +22,14 @@ public class AuthController {
         }
     }
 
+    @PostMapping(path = "/api/admin/login")
+    public ResponseEntity<?> adminLogin(@RequestBody Auth auth){
+        try {
+            return ResponseEntity.ok(authService.adminLogin(auth));
+        } catch (Exception e) {
+            return ResponseEntity.status ( HttpStatus.UNAUTHORIZED ).build ();
+        }
+    }
+
 
 }
