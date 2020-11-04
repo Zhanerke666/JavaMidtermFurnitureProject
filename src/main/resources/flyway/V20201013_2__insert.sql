@@ -23,8 +23,14 @@ values (1, 'Beds', 'qwerDF'),
 
 insert into customer values
 (1,'zhandos','87075893900','Abai 121'),
-(2,'alim','86969696969','Panfilova 15');
+(2,'alim','86969696969','Panfilova 15'),
+(3, 'zhanerke', '87768695513', 'Glushko 4'),
+(4, 'alan', '87777102021', 'Address'),
+(5, 'john', '87474105465', 'Address1');
 insert into auth values
 (1,1,'zhandos','789z789z','zhandos789z789z'),
-(2,2,'alim','Lima','alimLima');
+(2,2,'alim','Lima','alimLima'),
+(3,3, 'zhanerke', '12345', 'erke'),
+(4,4, 'alan', 'alan', 'alanushka'),
+(5,5, 'zhandos', 'john', 'john');
 
