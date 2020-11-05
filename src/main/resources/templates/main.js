@@ -130,7 +130,9 @@ app.controller('adminController', function($scope, $http) {
                     })
                     .catch((error)=>{
                         console.log(error);
-                       alert(error.data);
+                       if(error.status === 401){
+                        alert("Wrong login and password");
+                       }
                        $scope.isAuthorized = false;
                        window.localStorage.setItem("admin_auth_state","false");
                        window.localStorage.removeItem("admin_auth_token");
