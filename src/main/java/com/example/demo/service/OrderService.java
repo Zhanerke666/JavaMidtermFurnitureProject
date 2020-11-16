@@ -38,8 +38,11 @@ public class OrderService {
         LocalDate localDate = LocalDate.now();
         Order newOrder = new Order();
         newOrder.setCustomerId(me.getId());
+        float discount = me.getDiscount();
         newOrder.setOrderDate(dtf.format(localDate));
-        newOrder.setTotalPrice(order.getTotalPrice());
+        float ttp = order.getTotalPrice();
+        ttp = (float) (ttp - ttp * discount * 0.01);
+        newOrder.setTotalPrice(ttp);
         newOrder.setStatus("new");
         System.out.println(newOrder);
         try{

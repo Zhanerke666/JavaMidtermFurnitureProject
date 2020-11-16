@@ -12,11 +12,11 @@ insert into product (id, name, slug, description, price, category_id) values
 (5, 'Chair Venice', 'WERsdfg',  'Solid wood / Beech, Jasmine 26, Stryi (Ukraine)', 14000, 2),
 (6, 'Chair Fink', 'tyuibnkI', 'Solid wood / Wenge, 713 beige, Stryi (Ukraine)', 20000, 2  ),
 (7, 'Chair Rogzhen', 'RTYfgh', 'Solid wood / Beech, Ecosoft36, Stryi (Ukraine)', 15000, 2 ),
-(8, 'Chair Alexis with armrests', 'FGrtyu', 'Solid wood / Beech, Orino 24, Stryi (Ukraine) ', 18000, 2 )
+(8, 'Chair Alexis with armrests', 'FGrtyu', 'Solid wood / Beech, Orino 24, Stryi (Ukraine) ', 18000, 2 ),
 (9, 'The Influence Sofa', 'seTg', 'Crushed Micro-Chenille Bordeaux (Britain)', 60000, 4),
 (10, 'The Pragmatist Sofa', 'seTnym', 'Crushed Micro-Chenille Bordeaux (Britain)', 75000, 4),
 (11, 'The Philosopher Sofa', 'Dneim', 'Crushed Micro-Chenille Bordeaux (Britain)', 55000, 4),
-(12, 'Idealistic Sofa', 'idol', 'Crushed Micro-Chenille Bordeaux (Germany)', 68000, 4)
+(12, 'Idealistic Sofa', 'idol', 'Crushed Micro-Chenille Bordeaux (Germany)', 68000, 4),
 (13, 'Sofa Browny Pie', 'qeifh', 'Crushed Micro-Chenille Bordeaux colored into dark brown (Britain)', 80000, 4),
 (14, 'The Wealth Sofa', 'gtrjs', 'Great House Collection (UK)', 64000, 4),
 (15, 'House of Green Sofa', 'gtjcvs', 'Unusual Box Think Collection (USA)', 90000, 4),
