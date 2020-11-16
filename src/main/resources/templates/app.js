@@ -2,10 +2,6 @@ var app = angular.module('aitu-project', []);
 let auth_state = window.localStorage.getItem("auth_state");
 let auth_token = window.localStorage.getItem("auth_token");
 app.controller('ProductCtrl', function($scope, $http) {
-    $scope.order_status = ''
-    $scope.orders = []
-    $scope.current_order = {}
-    $scope.changed_status = '';
     $scope.productList = [];
     $scope.categoryList = [];
     $scope.cart = [];
@@ -13,52 +9,6 @@ app.controller('ProductCtrl', function($scope, $http) {
     $scope.isAuthorized = auth_state === "true";
     $scope.token = auth_token ? auth_token : "";
     $scope.orderList = [];
-
-
-
-    $scope.onInput = function(){
-        console.log($scope.order_status);
-        $http({
-            url: 'http://127.0.0.1:8080/api/orders/status/customer/'+$scope.order_status,
-            method: "GET",
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Content-Type": "application/json",
-                "Auth": $scope.token
-            },
-            data: 'status:'+$scope.order_status
-        })
-            .then(function (response) {
-                console.log(response.data)
-                $scope.orders = response.data
-            }).catch((response)=>{
-            console.log(response)
-            $scope.orders = []
-        });
-    }
-
-    $scope.showMore = function(index){
-        console.log(index)
-        let id = $scope.orders[index].id
-        $http({
-            url: 'http://127.0.0.1:8080/api/orders/'+id,
-            method: "GET",
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Content-Type": "application/json",
-                "Auth": $scope.token
-            },
-            data: 'id:'+id
-        })
-            .then(function (response) {
-                console.log(response.data)
-                $scope.current_order = response.data
-            }).catch((response)=>{
-            console.log(response)
-            $scope.current_order = {}
-        });
-    }
-
     $scope.addToCart = function(product){
         console.log($scope.cart.length);
         if($scope.cart.length > 0){
@@ -235,7 +185,6 @@ app.controller('ProductCtrl', function($scope, $http) {
         })
             .then(function (response) {
                     $scope.customer = response.data;
-                    localStorage.setItem('me',response.data);
                 },
                 function (response) { // optional
                     console.log(response);
