@@ -9,6 +9,7 @@ app.controller('ProductCtrl', function($scope, $http) {
     $scope.isAuthorized = auth_state === "true";
     $scope.token = auth_token ? auth_token : "";
     $scope.orderList = [];
+
     $scope.addToCart = function(product){
         console.log($scope.cart.length);
         if($scope.cart.length > 0){
@@ -126,11 +127,6 @@ app.controller('ProductCtrl', function($scope, $http) {
                     console.log(response);
                 });
     };
-
-
-
-
-
     $scope.getCategories = function() {
         $http({
             url: 'http://127.0.0.1:8080/api/category',
