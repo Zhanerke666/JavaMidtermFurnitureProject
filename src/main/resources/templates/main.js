@@ -148,3 +148,30 @@ app.controller('adminController', function($scope, $http) {
                 $scope.customer = {}
             }
 })
+
+
+$scope.delete = function (order_id){
+    $http({
+        url: 'http://127.0.0.1:8081/api/orders/delete/'+order_id,
+            method: "DELETE",
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json"
+    },
+})
+.then(function (response) {
+                console.log(response);
+        $scope.getOrders();
+        $scope.deleteFromDashboard(order_id);
+    },
+    function (response) {// optional
+        console.log(response);
+    });
+};
+
+
+
+
+
+
+

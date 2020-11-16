@@ -81,3 +81,19 @@ public class OrderController {
     }
 
 }
+
+    @GetMapping("/api/orders/get-dashboard")
+    public ResponseEntity<?> createDashboard() {
+        return ResponseEntity.ok(orderService.createDashboard());
+    }
+
+    @DeleteMapping("/api/orders/delete-dashboard/{orderId}")
+    public void deleteDashboard(@PathVariable Long orderId){
+        orderService.deleteFromDashboard(orderId);
+    }
+
+    @DeleteMapping("/api/orders/delete/{orderId}")
+    public void deleteById(@PathVariable Long orderId){
+        orderService.delete(orderId);
+
+    }

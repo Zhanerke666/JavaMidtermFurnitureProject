@@ -262,3 +262,9 @@ public class OrderService {
         }
     }
 }
+
+public void delete(Long orderId) {
+        orderRepository.deleteById(orderId);
+        }
+}
+
