@@ -149,6 +149,53 @@ public class OrderService {
         return orderInfoList;
     }
 
+
+    public Object getAllOrdersByStatusCustomer(String token, String status) throws Exception{
+        Customer me;
+        try {
+            me = authService.getCustomerByToken(token);
+            String role = roleRepository.findRoleByUserId(me.getId());
+            if(!role.equals("customer")) throw new Exception("Error");
+        } catch (Exception e) {
+            throw e;
+        }
+        List<Order> orders;
+        if(status.equals("all")){
+
+            orders = orderRepository.findAllByCustomerId(me.getId());
+        } else if (status.equals("new")){
+            orders = orderRepository.findAllByStatusAndCustomerId(me.getId(), status);
+        }else if (status.equals("inprogress")){
+            orders = orderRepository.findAllByStatusAndCustomerId(me.getId(), status);
+        }else if (status.equals("done")){
+            orders = orderRepository.findAllByStatusAndCustomerId(me.getId(), status);
+        }else {
+            orders = orderRepository.findAllByStatusAndCustomerId(me.getId(), status);
+        }
+        if(orders.isEmpty()){
+            throw new Exception("No items");
+        }
+        System.out.println(orders);
+        List<OrderInfo> orderInfoList = new ArrayList<>();
+        for (Order order:
+                orders) {
+            OrderInfo orderInfo = new OrderInfo();
+            orderInfo.setId(order.getId());
+            orderInfo.setDate(order.getOrderDate());
+            orderInfo.setTotalPrice(order.getTotalPrice());
+            Customer customer = customerRepository.findById(order.getCustomerId()).orElseThrow();
+            orderInfo.setCustomerAddress(customer.getAddress());
+            orderInfo.setCustomerName(customer.getName());
+            orderInfo.setCustomerPhone(customer.getPhone());
+            orderInfo.setStatus(order.getStatus());
+            System.out.println(orderInfo);
+            assert false;
+            orderInfoList.add(orderInfo);
+        }
+        System.out.println(orderInfoList);
+        return orderInfoList;
+    }
+
     public Object getOrderWithItemsById(String token, Long id) throws Exception {
         Customer me;
         try {

@@ -13,4 +13,7 @@ import java.util.Optional;
 public interface RoleRepository extends JpaRepository<Role,Long> {
     @Query(value = "select rolle from user_role where user_id = :user_id",nativeQuery = true)
     String findRoleByUserId(@Param("user_id") Long user_id);
+
+
+
 }
