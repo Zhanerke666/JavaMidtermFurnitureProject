@@ -11,3 +11,8 @@ public class FurnitureApplication {
     }
 
 }
+
+class private {
+    dfg
+
+        }
