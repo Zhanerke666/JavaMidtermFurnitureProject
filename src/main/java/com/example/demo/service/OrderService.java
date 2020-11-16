@@ -184,6 +184,7 @@ public class OrderService {
             orderInfo.setTotalPrice(order.getTotalPrice());
             orderInfo.setOrderDetailInfo(orderDetailInfos);
             orderInfo.setCustomerId(order.getCustomerId());
+            orderInfo.setStatus(order.getStatus());
             Customer customer = customerRepository.findById(order.getCustomerId()).orElseThrow();
             orderInfo.setCustomerAddress(customer.getAddress());
             orderInfo.setCustomerName(customer.getName());
